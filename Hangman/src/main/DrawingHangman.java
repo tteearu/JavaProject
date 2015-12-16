@@ -10,7 +10,7 @@ public class DrawingHangman extends Applet {
     public void paint(Graphics g) {
         this.g = g;
 
-        drawHangman(9);
+        drawHangman(7);
     }
 
     public void drawHangman(int frameNr) {

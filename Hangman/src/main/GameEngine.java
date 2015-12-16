@@ -1,130 +1,179 @@
 package main;
 
-import java.awt.event.ActionEvent;
+/**
+ * Importing necessary libraries
+ */
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.awt.event.ActionListener;
-import java.sql.Array;
-import javax.swing.JButton;
 
+/**
+ * Class that gets called out to create initial state of Game.java
+ */
 public class GameEngine {
 
-	private static int failCounter = 0;
-	static int random(int min, int max)
-	{
-	   int range = (max - min) + 1;     
-	   int a = (int)(Math.random() * range) + min;
-	   return a;
-	}
-	
-	public static String[] Engine() {
-        ArrayList<String> lines = new ArrayList<String>();
-        String[] letters = new String[1];	
-        String kataloogitee = GameEngine.class.getResource(".").getPath();
-        File file = new File(kataloogitee + "words.txt");
-        int length = 0;
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(file));
-            String rida;
+	public int failCounter = 0;
+	String word2B;
+	String prevWord;
+	String[] letters;
+	String[] initWord;
+	boolean gOver = false;
+	boolean wordGuessed = false;
+	boolean linesExist = false;
 
-            while ((rida = in.readLine()) != null) {
-                lines.add(rida);
-                length += 1;
-            }
-           int k = random(0, length);
-           String randomWord =lines.get(k);
-           System.out.println(randomWord);
-               
-                     
-       //    String[] letters = randomWord.split("");
-           
-           char[] c = randomWord.toCharArray();
-           letters = new String[c.length];
-           
-           for (int i = 0; i < c.length; i++) {
-               letters[i] = String.valueOf(c[i]);
-           }
-           System.out.println(Arrays.toString(letters));
-        
-        }
-        catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());           
-        }
-		return letters; 
-    }	
-	public static String[] kriips(String[] args){
-		int i = 0;
-		for(String str : args ) {
-			args[i] = "_";
-			i++;
+	/**
+	 * Picking random word form words.txt
+	 */
+	static int random(int min, int max) {
+		int range = (max - min) + 1;
+		int a = (int) (Math.random() * range) + min;
+		return a;
+	}
+
+	GameEngine(String sõnaMidaArvada) {
+
+		ArrayList<String> lines = new ArrayList<String>();
+		String kataloogitee = GameEngine.class.getResource(".").getPath();
+		File file = new File(kataloogitee + "words.txt");
+		int length = 0;
+		String rida;
+		try {
+			BufferedReader in = new BufferedReader(new FileReader(file));
+
+			while ((rida = in.readLine()) != null) {
+				lines.add(rida.trim());
+				length += 1;
 			}
-		return args;
-	}
-	public static String[] Just4Lulz(String[] args){
-		return args;
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			System.exit(-1);
+		}
+		/**
+		 * All letters from random word to upper case
+		 */
+		int k = random(0, length);
+		word2B = lines.get(k);
+		word2B = word2B.toUpperCase();
+		/**
+		 * Creating two identical arrays with same content
+		 */
+		char[] c = word2B.toCharArray();
+		letters = new String[c.length];
+		initWord = new String[c.length];
+
+		for (int i = 0; i < c.length; i++) {
+			letters[i] = String.valueOf(c[i]);
+			initWord[i] = String.valueOf(c[i]);
+		}
+		/**
+		 * Replacing letters[] with underscores
+		 */
+		int kriips = initWord.length;
+		for (int j = 0; j < kriips; j++) {
+			letters[j] = "_";
+		}
+
+		/**
+		 * DEBUG
+		 * 
+		 * for(int a = 0; a < letters.length; a++){
+		 * System.out.print(letters[a]+" "); }
+		 * 
+		 * System.out.println("INTERNAL STATE IS:");
+		 * System.out.println("word2b:"); System.out.println(word2B);
+		 * System.out.println("letters:");
+		 * System.out.println(Arrays.toString(letters));
+		 * System.out.println("initWord");
+		 * System.out.println(Arrays.toString(initWord));
+		 */
 	}
 
-	public static String[] letterCheck(String guessLetter, String[] sona, String[] prevWord ) {
+	/**
+	 * @param guessLetter
+	 *            Method that checks whether the picked letter is correct, if
+	 *            true, replaces the underscore with picked letter, else adds
+	 *            one to failCounter
+	 */
+
+	void letterCheck(String guessLetter) {
 		System.out.println(guessLetter);
-		boolean correct = false;
-		for(int q = 0; q < sona.length; q++){
-			if(guessLetter.equals(sona[q])){
-				prevWord[q] = guessLetter;
-				correct = true;
+		boolean letterCorrect = false;
+		System.out.println("initWord");
+		System.out.println(Arrays.toString(initWord));
+
+		/**
+		 * DEBUG
+		 * 
+		 * System.out.println("INTERNAL STATE::");
+		 * System.out.println("word2b:"); System.out.println(word2B);
+		 * System.out.println("letters:");
+		 * System.out.println(Arrays.toString(letters));
+		 * System.out.println("initWord:");
+		 * System.out.println(Arrays.toString(initWord));
+		 */
+
+		for (int q = 0; q < word2B.length(); q++) {
+
+			/**
+			 * DEBUG
+			 * 
+			 * System.out.println("gLetter::" + guessLetter);
+			 * System.out.println("InitWordQ::" + initWord[q]);
+			 */
+
+			if (guessLetter.equals(initWord[q])) {
+				letters[q] = guessLetter;
+				letterCorrect = true;
 			}
-		}return prevWord;
-		
-//         int ammount = letters.length;
-//         System.out.println(ammount);
-//         StringBuilder kriips = new StringBuilder();
-//         
-//         for(int q = 0; q < ammount; q++){
-//      	   if(guessLetter == letters[q]){
-//      		   kriips.append(guessLetter);
-//      	   }else{
-//      		   failCounter++;
-//      		   if(failCounter == 9){
-////      			   WinLoose();
-//      		   }else{
-//      			   kriips.append("_ ");
-//      		   }
-//  		   }
-//         }
-//         kriips.toString();
-//         System.out.println(kriips);
-//		return kriips.toString();	
+		}
+		/**
+		 * prevWord represents the new string put together from guessed letters
+		 * and letters remaining to be guessed
+		 */
+		System.out.println("PREVWORD");
+		prevWord = Arrays.toString(letters);
+
+		if (letterCorrect == false) {
+			failCounter++;
+			System.out.println("Failed:: " + failCounter + "/9 times");
+		}
+		boolean gOver = false;
+		linesExist = false;
+
+		/**
+		 * DEBUG
+		 * 
+		 * System.out.println(check);
+		 * System.out.println(Arrays.toString(letters));
+		 * System.out.println(linesExist);
+		 * 
+		 * 
+		 * Following lines determine whether there are underscores to be
+		 * replaced or whether the failCounter has reached 9, which ends the
+		 * game automatically
+		 */
+
+		String check = "_";
+		for (int q = 0; q < word2B.length(); q++) {
+			if (check.equals(letters[q])) {
+				linesExist = true;
+			}
+		}
+		System.out.println(linesExist);
+		if (!linesExist) {
+			wordGuessed = true;
+			WinLoose.main();
+			gOver = true;
+
+		}
+		if (failCounter >= 9) {
+			wordGuessed = false;
+			WinLoose.main();
+			gOver = true;
+		}
+
 	}
 }
-//	public static Object array() {
-//	String[] words = {"heterotopia", "westwards", "theocracy","iota","hoe","etym","richweed","loci","sporulate","dinoceras","coexistence","gymnogynous","odea","dzhambul","loring","jaffna","deoxidised","belteshazzar","viscosimetric","nondefective"};  
-//	int i = (int)(Math.random() * (words.length));
-//	String randomWord = words[i];
-//	String[] letters = randomWord.split("");
-//	
-//	int kriips = letters.length;
-//	String[] array = new String[kriips];
-//	for (int j =  0; j < kriips; j++) {
-//		   array[j] = "_";
-//		}
-//		return array;
-//	};
-//	class Alphabet_and_wordlist{
-//
-//		int kriips = randomWord.length();
-//		int failure = 0;
-//		String[] tahed = randomWord.split("");
-//		
-//		///uustekst = tekst.replace('a', '_');
-		
-
-		
-
-

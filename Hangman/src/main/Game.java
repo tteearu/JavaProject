@@ -1,42 +1,47 @@
 package main;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 import javax.swing.*;
  
 public class Game {
     
-   private JFrame Frame;
-   private JFrame Graphics;
+   private JFrame frame;
+   private JFrame graphics;
    private JLabel header1;
    private JLabel kriipsud;
    private JLabel statusLabel;
    private JPanel controlPanel;
    private JPanel alphabet;
    private JPanel stickSam;
-
+   private GameEngine engine;
+   private JLabel fail;
+   String[] initline;
+   
    public Game(){
-      prepareGUI();
+      engine = new GameEngine(null);
+      gui();
    }
 
    public static void gamePlay(){
-      Game  swingControlDemo = new Game();      
-      swingControlDemo.textField();
+      Game  swingControl = new Game();      
+      swingControl.textField();
    }
    
-   private void prepareGUI(){
-      Frame = new JFrame("Hangman");
-      Frame.setSize(650,600);
-      Frame.setLayout(new GridLayout(3, 1));
-      Graphics = new JFrame("Think hard about your next move!");
-      Graphics.setSize(650,600);
-      Graphics.setLayout(new GridLayout(3, 9));
-      Frame.addWindowListener(new WindowAdapter() {
+   private void gui(){
+      frame = new JFrame("Hangman");
+      frame.setSize(650,600);
+      frame.setLayout(new GridLayout(3, 1));
+      graphics = new JFrame("Think hard about your next move!");
+      graphics.setSize(650,600);
+      graphics.setLayout(new GridLayout(3, 9));
+      frame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
          }
       });
-         Graphics.addWindowListener(new WindowAdapter() {
+         graphics.addWindowListener(new WindowAdapter() {
         	 public void windowClosing(WindowEvent windowEvent){
         		 System.exit(0);
     	 }    
@@ -57,18 +62,25 @@ public class Game {
       alphabet.setLayout(new GridLayout(3, 12));
 
       controlPanel.add(header1);
-      controlPanel.add(kriipsud);
-      Frame.add(controlPanel);
-      Frame.add(stickSam);
+      frame.add(controlPanel);
+      frame.add(stickSam);
 //      Ring ring = new Ring();
 //      ring.drawHangman(5);
 //      controlPanel.add(ring.g);
-      Frame.add(alphabet);
-//      Frame.add(statusLabel);
-      Frame.setVisible(true);   
+		frame.add(alphabet);
+		frame.setVisible(true);
+		kriipsud = new JLabel("", JLabel.CENTER);
+		String status = Arrays.toString(engine.letters);
+		kriipsud.setText(status);
+		controlPanel.add(kriipsud);
+
+		fail = new JLabel("", JLabel.CENTER);
+		String failCounter = String.valueOf(engine.failCounter);
+		fail.setText(failCounter);
+		controlPanel.add(fail);
    }
    public void showArr(String[] args){
-	   kriipsud = new JLabel(args.toString(), JLabel.CENTER);
+	   System.out.println("Kriipsud");
    }
 
    private void textField(){
@@ -81,36 +93,59 @@ public class Game {
          };
       });
  
-      final String[] word2B = GameEngine.Engine();
-//      final String[] initline = GameEngine.kriips(word2B);
-      
+//      final String word2B = engine.word2B;
+   
       
       
 // 	 ((JButton)e.getSource()).disable();
 
-      String letters[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "Z", "T", "U", "V", "W", "X", "Y"};
+      
+      String letters[] = {"A", "B","C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "Z", "T", "U", "V", "W", "X", "Y"};
+//      String letters[] = {"Q", "W","E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"};
       for(String letter: letters){
     	  final JButton letterButton = new JButton(letter);
           letterButton.addActionListener(new ActionListener() {
-             public void actionPerformed(ActionEvent e) {     
-            	String[] initline = GameEngine.kriips(word2B);
+             public void actionPerformed(ActionEvent e) {    
             	letterButton.setVisible(false);
-            	String[] wordStatus = GameEngine.letterCheck(letterButton.toString(), word2B, initline);
-            	initline = wordStatus;
-            	 kriipsud = new JLabel(wordStatus.toString(), JLabel.CENTER);             };
+
+            	engine.letterCheck(letterButton.getText());
+//            	engine.toString();
+            	System.out.println(letterButton.getText());
+            	System.out.println(Arrays.toString(engine.initWord));
+    			System.out.println(engine.prevWord);
+    		    
+    			String status = Arrays.toString(engine.letters);
+    		    kriipsud.setText(status);
+    		    controlPanel.add(kriipsud);
+    		    
+    		    String failCounter = String.valueOf(engine.failCounter);
+    			System.out.println(failCounter);
+    			fail.setText(failCounter);
+    		    controlPanel.add(fail);
+    		    
+    		    boolean gOver = engine.gOver;
+    		    if(gOver){
+    		    	frame.show(false);
+    		    }
+    		    
+    		    
+        	 };
           });
           alphabet.add(letterButton, BorderLayout.SOUTH);
          
       }
-      final JButton testingButton = new JButton("TST");
-      exitButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-        	 System.exit(0);
+      
+      JButton testingButton = new JButton("TesT");
+      testingButton.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {     
+        	 frame.show(false);
+        	 WinLoose.main();    
          };
       });
+      
       alphabet.add(testingButton, BorderLayout.SOUTH);
-      Frame.setVisible(true);
-      Frame.setResizable(false);
-      Frame.setAlwaysOnTop(true);   
+      frame.setVisible(true);
+      frame.setResizable(false);
+      frame.setAlwaysOnTop(true);   
    }
 }

@@ -17,15 +17,15 @@ public class WinLoose {
    private JPanel newGame;
 
    public WinLoose(){
-      prepareGUI();
+      gui();
    }
 
    public static void main(){
-	   WinLoose  swingControlDemo = new WinLoose();      
-      swingControlDemo.showTextFieldDemo();
+	   WinLoose  swingControl = new WinLoose();      
+      swingControl.textField();
    }
 
-   private void prepareGUI(){
+   private void gui(){
       Frame = new JFrame("Finish");
       Frame.setSize(650,500);
       Frame.setLayout(new GridLayout(3, 1));
@@ -66,7 +66,7 @@ public class WinLoose {
    }
    
 
-   private void showTextFieldDemo(){
+   private void textField(){
       headerLabel1.setText("");
       headerLabel2.setText("");
 
