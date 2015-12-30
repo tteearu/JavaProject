@@ -28,8 +28,8 @@ public class GameEngine {
 	 * Picking random word form words.txt
 	 */
 	static int random(int min, int max) {
-		int range = (max - min) + 1;
-		int a = (int) (Math.random() * range) + min;
+		int a = (int) (Math.random() * (max-min));
+		System.out.println(a);
 		return a;
 	}
 
@@ -163,17 +163,16 @@ public class GameEngine {
 			}
 		}
 		System.out.println(linesExist);
-		if (!linesExist) {
-			wordGuessed = true;
-			WinLoose.main();
-			gOver = true;
-
-		}
-		if (failCounter >= 9) {
-			wordGuessed = false;
-			WinLoose.main();
-			gOver = true;
-		}
+//		if (!linesExist) {
+//			wordGuessed = true;
+//			gOver = true;
+//
+//		}
+//		if (failCounter >= 9) {
+//			wordGuessed = false;
+//			new WinLoose(this);
+//			gOver = true;
+//		}
 
 	}
 }

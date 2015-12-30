@@ -9,21 +9,14 @@ public class KeyListener extends KeyAdapter {
 	public KeyListener(Game game) {
 		this.game = game;
 	}
-
-	public void escape(KeyEvent event) {
-		int keyCode = event.getKeyCode();
-		if (keyCode == KeyEvent.VK_ESCAPE) {
-			System.exit(0);
-		}
-	}
-
+	/**
+	 * Listening to keyboard, when letter checked act as graphic letter was clicked,
+	 * escape kills the program
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		String[] keys = { "VK_A", "VK_B", "VK_C", "VK_D", "VK_E", "VK_F",
-				"VK_G", "VK_H", "VK_I", "VK_J", "VK_K", "VK_L", "VK_M", "VK_N",
-				"VK_O", "VK_P", "VK_Q", "VK_R", "VK_S", "VK_Z", "VK_T", "VK_U",
-				"VK_V", "VK_W", "VK_X", "VK_Y", "VK_ESCAPE" };
-		e.getKeyChar();
+		
+		e.getKeyChar();		
 		String letter = String.valueOf(e.getKeyChar());
 		System.out.println(String.valueOf(e.getKeyChar()));
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

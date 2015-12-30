@@ -22,7 +22,7 @@ public class Registration {
 
    private void prepareGUI(){
       mainFrame = new JFrame("Hangman");
-      mainFrame.setSize(650,550);
+      mainFrame.setSize(650,600);
       mainFrame.setLayout(new GridLayout(5, 1));
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
@@ -47,11 +47,16 @@ public class Registration {
    
 
    private void showTextFieldDemo(){
+	   
       headerLabel1.setText("Welcome! You are the chosen one!");
+      headerLabel1.setFont(new Font("Regular", Font.BOLD, 16));
+      
       headerLabel2.setText("Enter your name down below, and click Start!");
+      headerLabel2.setFont(new Font("Regular", Font.BOLD, 16));
 
       JLabel  namelabel= new JLabel("Player name: ", JLabel.RIGHT);
       final JTextField userText = new JTextField(6);
+      final String userName = userText.getText();
       
 
       JButton exitButton = new JButton("Exit");
@@ -61,8 +66,8 @@ public class Registration {
          };
       });
 
-      final JButton loginButton = new JButton("Start");
-      loginButton.addActionListener(new ActionListener() {
+      final JButton startButton = new JButton("Start");
+      startButton.addActionListener(new ActionListener() {
          
     	  public  void actionPerformed(ActionEvent e) {     
             String name = "Player name:" + userText.getText();
@@ -75,7 +80,7 @@ public class Registration {
 
       controlPanel.add(namelabel);
       controlPanel.add(userText);
-      controlPanel.add(loginButton);
+      controlPanel.add(startButton);
       mainFrame.setVisible(true);
       mainFrame.setResizable(false);
       mainFrame.setAlwaysOnTop(true);
