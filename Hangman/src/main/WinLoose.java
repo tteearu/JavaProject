@@ -32,11 +32,17 @@ public class WinLoose {
             System.exit(0);
          }
       });
+      /**
+       * Displaying text with JLabel
+       */
   
       headerLabel1 = new JLabel("Bet, you won't win the next round!", JLabel.CENTER);
       headerLabel1.setFont(new Font("Regular", Font.PLAIN, 20));
       word = new JLabel("", JLabel.CENTER);
 
+      /**
+       * Setting layouts to JPanels
+       */
       information = new JPanel();
       information.setLayout(new GridLayout(1, 1));
       
@@ -49,13 +55,21 @@ public class WinLoose {
       newGame = new JPanel();
       newGame.setLayout(new GridLayout(1, 2));
       
-      Frame.add(headerLabel1);
+      /**
+       * Adding JPanels to Frame
+       */
+      
       Frame.add(information);
+      Frame.add(headerLabel1);
       Frame.add(emtpyJPanel1);
       Frame.add(word);
       Frame.add(newGame);
-//      Frame.add(statusLabel);
       Frame.setVisible(true);   
+      
+      /**
+       * Checking whether the game was won or lost
+       */
+      
       if(game.engine.wordGuessed){
     	  JLabel namelabel= new JLabel( "You won! ... this time", JLabel.CENTER);
     	  namelabel.setFont(new Font("Regular", Font.PLAIN, 20));
@@ -67,12 +81,14 @@ public class WinLoose {
       }
        
       headerLabel1.setText("Bet, you won't win the next round!");
-//      String tekst = game.engine.word2B;
-//      System.out.println(tekst);
-//      word.setText(tekst);
+      
+      /**
+       * Creating buttons for new game and exiting the program
+       */
    
       
       final JButton newGameButton = new JButton("New Game");
+      newGameButton.setFont(new Font("Regular", Font.BOLD, 16));
       newGameButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {     
              Frame.show(false);
@@ -81,6 +97,7 @@ public class WinLoose {
       }); 
 
       JButton exitButton = new JButton("Exit");
+      exitButton.setFont(new Font("Regular", Font.BOLD, 16));
       exitButton.addActionListener(new ActionListener() {
     	  public void actionPerformed(ActionEvent e) {     
     		  System.exit(0);    

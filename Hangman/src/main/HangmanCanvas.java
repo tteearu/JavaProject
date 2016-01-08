@@ -5,6 +5,12 @@ import java.awt.*;
 
 public class HangmanCanvas extends Canvas {
 	int failCounter;
+	
+	/**
+	 * Setting failCounter a new value if it changes,
+	 * repainting if the value changes
+	 * @param setFailCounter
+	 */
 
 	public void setFailCounter(int failCounter) {
 		this.failCounter = failCounter;

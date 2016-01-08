@@ -1,7 +1,7 @@
 i200 Project
-------------
+============
 
-This is yet another game of  Hangman.
+This is yet another game of  Hangman.\
 Created for Estonian Information Technology College's subject I200 - Introduction to programming using Java.
 
 Set-up
@@ -14,12 +14,14 @@ git clone https://github.com/tteearu/JavaProject.git
 ```
 
 * Open in some sort of Java IDE for example Eclipse or IntelliJ
-* Compile the program
-* Run
+* Run as Java application
+
+Personalisation
+---------------
 
 **Adding words for program to choose from**
-* open words.txt
-* insert one word per line in the end of the file
+* Open words.txt
+* Insert one word per line in the end of the file
 
 **Changing on-screen keyboard layout**
 * Open Game.java

@@ -29,10 +29,12 @@ public class GameEngine {
 	 */
 	static int random(int min, int max) {
 		int a = (int) (Math.random() * (max-min));
-		System.out.println(a);
 		return a;
 	}
-
+	/**
+	 * reading 
+	 * @param sõnaMidaArvada
+	 */
 	GameEngine(String sõnaMidaArvada) {
 
 		ArrayList<String> lines = new ArrayList<String>();
@@ -47,6 +49,9 @@ public class GameEngine {
 				lines.add(rida.trim());
 				length += 1;
 			}
+			/**
+			 * If file reading should fail for any reason, it throws an error to console
+			 */
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(-1);
@@ -57,9 +62,11 @@ public class GameEngine {
 		int k = random(0, length);
 		word2B = lines.get(k);
 		word2B = word2B.toUpperCase();
+		
 		/**
-		 * Creating two identical arrays with same content
+		 * Creating two identical arrays
 		 */
+		
 		char[] c = word2B.toCharArray();
 		letters = new String[c.length];
 		initWord = new String[c.length];
@@ -72,6 +79,7 @@ public class GameEngine {
 		 * Replacing letters[] with underscores
 		 */
 		int kriips = initWord.length;
+		
 		for (int j = 0; j < kriips; j++) {
 			letters[j] = "_";
 		}
@@ -94,21 +102,19 @@ public class GameEngine {
 	/**
 	 * @param guessLetter
 	 *            Method that checks whether the picked letter is correct, if
-	 *            true, replaces the underscore with picked letter, else adds
-	 *            one to failCounter
+	 *            true, replaces the underscore with picked letter, if none of the underscores
+	 *            represent guessed letter, one is added to failCounter
 	 */
 
 	void letterCheck(String guessLetter) {
-		System.out.println(guessLetter);
 		boolean letterCorrect = false;
-		System.out.println("initWord");
-		System.out.println(Arrays.toString(initWord));
 
 		/**
 		 * DEBUG
 		 * 
 		 * System.out.println("INTERNAL STATE::");
-		 * System.out.println("word2b:"); System.out.println(word2B);
+		 * System.out.println("word2b:");
+		 *  System.out.println(word2B);
 		 * System.out.println("letters:");
 		 * System.out.println(Arrays.toString(letters));
 		 * System.out.println("initWord:");
@@ -133,12 +139,10 @@ public class GameEngine {
 		 * prevWord represents the new string put together from guessed letters
 		 * and letters remaining to be guessed
 		 */
-		System.out.println("PREVWORD");
 		prevWord = Arrays.toString(letters);
 
 		if (letterCorrect == false) {
 			failCounter++;
-			System.out.println("Failed:: " + failCounter + "/9 times");
 		}
 		boolean gOver = false;
 		linesExist = false;
@@ -162,17 +166,5 @@ public class GameEngine {
 				linesExist = true;
 			}
 		}
-		System.out.println(linesExist);
-//		if (!linesExist) {
-//			wordGuessed = true;
-//			gOver = true;
-//
-//		}
-//		if (failCounter >= 9) {
-//			wordGuessed = false;
-//			new WinLoose(this);
-//			gOver = true;
-//		}
-
 	}
 }
