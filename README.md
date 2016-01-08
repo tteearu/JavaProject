@@ -1,7 +1,8 @@
 i200 Project
 ============
 
-This is yet another game of  Hangman.\
+This is yet another game of  Hangman.
+
 Created for Estonian Information Technology College's subject I200 - Introduction to programming using Java.
 
 Set-up
